@@ -6,11 +6,11 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:06:07 by mraymond          #+#    #+#             */
-/*   Updated: 2022/08/09 12:55:58 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/08/30 10:15:31 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/libft.h"
+#include "../header/philo.h"
 
 static void	skip_space(const char *nptr, size_t *i)
 {

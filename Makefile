@@ -36,7 +36,10 @@ OBJS_DIR_BONUS	= 	./bonus/obj
 
 #FILES--------------------------------------------------------------------------
 
-SRCS_FILES	 	= 	0_main.c
+SRCS_FILES	 	= 	0_main.c \
+					ft_atoi.c \
+					ft_atol.c \
+					itoa.c
 
 #SRCS_FILES_BONUS= 	
 
@@ -100,7 +103,7 @@ endif
 					@$(RM) $(OBJS_DIR)
 					@$(RM) $(OBJS_BONUS)
 					@$(RM) $(OBJS_DIR_BONUS)
-					@echo "$Rpipex objects deleted$W"
+					@echo "$R$(NAME) objects deleted$W"
 endif
 
 fclean: 			clean
@@ -128,7 +131,11 @@ $(NAME_BONUS):		$(OBJS_BONUS)
 					@echo "$G$(NAME_BONUS) compiled$W"
 
 debug:
+ifeq ($(HAVE_LIBFT),y)
 					gcc -g $(CFLAGS) libft/*c $(SRCS) -o $(NAME)
+else
+					gcc -g $(CFLAGS) $(SRCS) -o $(NAME)
+endif
 
 #PHONY--------------------------------------------------------------------------
 
