@@ -39,7 +39,8 @@ OBJS_DIR_BONUS	= 	./bonus/obj
 SRCS_FILES	 	= 	0_main.c \
 					ft_atoi.c \
 					ft_atol.c \
-					itoa.c
+					itoa.c \
+					utils1.c
 
 #SRCS_FILES_BONUS= 	
 

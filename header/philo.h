@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:57:45 by mraymond          #+#    #+#             */
-/*   Updated: 2022/08/30 11:29:05 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:20:56 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 
+//ERROR MANAGEMENT--------------------------------------------------------------
 # define ERR_NBARG "**Error** Wrong number of argument.\n\n"
 # define ERR_ARG1 "**Error** Argument 1: number of philosopher -> "
 # define ERR_ARG2 "**Error** Argument 2: time to die -> "
@@ -35,7 +36,6 @@
 # define FORMAT "-------------------FORMAT TO USE----------------------------\n"
 # define LIMITS "-------------------LIMITS TO USE----------------------------\n"
 
-
 enum e_error
 {
 	WRONG_NB_ARG,
@@ -46,6 +46,7 @@ enum e_error
 	ARG_UNDERMIN = 5,
 	ARG_OVERMAX = 6
 };
+//-----------------------------------------------------------------------------
 
 typedef struct s_vars
 {
@@ -55,7 +56,14 @@ typedef struct s_vars
 	int	time_eat;
 	int	time_sleep;
 	int	nb_x_eat;
+	int	**fork;
 }				t_vars;
+
+typedef struct s_philo
+{
+	int	index;
+	
+}				t_philo;
 
 //0_main.c
 int			parcing_error_message(int error, int arg);
