@@ -37,11 +37,17 @@ OBJS_DIR_BONUS	= 	./bonus/obj
 #FILES--------------------------------------------------------------------------
 
 SRCS_FILES	 	= 	0_main.c \
+					1_parcing_err.c \
+					2_vars_init_free.c \
+					3_philo_routine.c \
+					4_philo_action.c \
+					free_dbl_ptr.c \
 					ft_atoi.c \
 					ft_atol.c \
+					ft_msleep.c \
 					itoa.c \
-					utils1.c
-
+					utils.c
+					
 #SRCS_FILES_BONUS= 	
 
 LIBFT_FILES		= 	libft.a
