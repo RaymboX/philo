@@ -6,16 +6,18 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:27:02 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/01 15:27:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/02 14:36:44 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	*philo_routine(t_vars *vars)
+void	*philo_routine(void *void_vars)
 {
-	int	philo_num;
+	t_vars	*vars;
+	int		philo_num;
 
+	vars = (t_vars *)void_vars;
 	philo_init(vars, &philo_num);
 	while (vars->philo[philo_num]->done == 0 && vars->philo_dead == 0)
 	{
@@ -24,13 +26,18 @@ void	*philo_routine(t_vars *vars)
 		philo_think(vars, philo_num);
 		philo_eat(vars, philo_num);
 	}
+	pthread_mutex_lock(&vars->mutex_terminal);
+	write_int(philo_num);
+	write(1, " done\n", 6);
+	pthread_mutex_unlock(&vars->mutex_terminal);
+	return (NULL);
 }
 
 void	philo_init(t_vars *vars, int *philo_num)
 {
 	pthread_mutex_lock(&vars->mutex_i_philo);
-	vars->i_philo += 1;
 	*philo_num = vars->i_philo;
+	vars->i_philo += 1;
 	pthread_mutex_unlock(&vars->mutex_i_philo);
 	vars->philo[*philo_num]->fork[0] = *philo_num - 1;
 	if (*philo_num == vars->nb_philo)
@@ -40,25 +47,32 @@ void	philo_init(t_vars *vars, int *philo_num)
 	vars->philo[*philo_num]->done = 0;
 	vars->philo[*philo_num]->state = 0;
 	vars->philo[*philo_num]->nb_x_eat = 0;
+	vars->philo[*philo_num]->time_eat = now_millisecond();
 	if (*philo_num % 2 == 0)
 	{
-		philo_think(vars, philo_num);
-		ft_msleep(1000);
+		philo_think(vars, *philo_num);
+		ft_msleep(1);
 	}
+	else
+		vars->philo[*philo_num]->state = 1;
 }
 
 void	state_message(t_vars *vars, int philo_num, char *message)
 {
-	char	*num;
+	char	*str_time;
+	char	*str_philo;
 
 	if (vars->philo_dead == 0)
 	{
-		num = ft_itoa((int)(now_millisecond() - vars->time_start));
-		write(1, num, ft_strlen(num));
+		str_time = ft_itoa((int)(now_millisecond() - vars->time_start));
+		str_philo = ft_itoa(philo_num + 1);
+		pthread_mutex_lock(&vars->mutex_terminal);
+		write(1, str_time, ft_strlen(str_time));
 		write(1, " ", 1);
-		free(num);
-		num = ft_itoa(philo_num);
-		write(1, num, ft_strlen(num));
+		write(1, str_philo, ft_strlen(str_philo));
 		write(1, message, ft_strlen(message));
+		pthread_mutex_unlock(&vars->mutex_terminal);
+		free(str_time);
+		free(str_philo);
 	}
 }

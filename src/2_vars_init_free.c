@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/01 15:26:57 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/02 15:20:02 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	record_arg_val_in_vars(t_vars *vars, int argc, char **argv)
 	else
 		vars->nb_x_eat = -1;
 	vars->nb_done = 0;
+	vars->philo_dead = 0;
 }
 
 // malloc and init vars (thread, mutex, struct)
@@ -44,6 +45,8 @@ void	vars_init(t_vars *vars)
 			= (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(vars->fork[vars->i_philo], NULL);
 	}
+	pthread_mutex_init(&vars->mutex_i_philo, NULL);
+	pthread_mutex_init(&vars->mutex_terminal, NULL);
 }
 
 void	vars_free(t_vars *vars)
@@ -51,7 +54,10 @@ void	vars_free(t_vars *vars)
 	vars->i_philo = -1;
 	while (++vars->i_philo != vars->nb_philo)
 		pthread_mutex_destroy(vars->fork[vars->i_philo]);
-	free_dbl_ptr(vars->philo);
-	free_dbl_ptr(vars->thread_philo);
-	free_dbl_ptr(vars->fork);
+	write(1, "not yet illegal\n", 16);
+	pthread_mutex_destroy(&vars->mutex_i_philo);
+	pthread_mutex_destroy(&vars->mutex_terminal);
+	free_dbl_ptr((void **)vars->philo, 1);
+	free_dbl_ptr((void **)vars->thread_philo, 1);
+	free_dbl_ptr((void **)vars->fork, 1);
 }

@@ -46,7 +46,8 @@ SRCS_FILES	 	= 	0_main.c \
 					ft_atol.c \
 					ft_msleep.c \
 					itoa.c \
-					utils.c
+					utils.c \
+					debug_fct.c
 					
 #SRCS_FILES_BONUS= 	
 

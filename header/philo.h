@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:57:45 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/01 15:26:01 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/02 15:20:12 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@
 # define ERR_OVERMAX "Argument is over limit\n\n"
 # define FORMAT "-------------------FORMAT TO USE----------------------------\n"
 # define LIMITS "-------------------LIMITS TO USE----------------------------\n"
-# define MESSAGE_FORK " has taken a fork"
-# define MESSAGE_EAT " is eating"
-# define MESSAGE_SLEEP " is sleeping"
-# define MESSAGE_THINK " is sleeping"
-# define MESSAGE_DIE " dead"
+# define MESSAGE_FORK " has taken a fork\n"
+# define MESSAGE_EAT " is eating\n"
+# define MESSAGE_SLEEP " is sleeping\n"
+# define MESSAGE_THINK " is thinking\n"
+# define MESSAGE_DIE " dead\n"
 
 enum e_error
 {
@@ -77,6 +77,7 @@ typedef struct s_vars
 	pthread_mutex_t		**fork;
 	long int unsigned	time_start;
 	int					philo_dead;
+	pthread_mutex_t		mutex_terminal;
 }				t_vars;
 
 //0_main.c
@@ -96,7 +97,7 @@ void				vars_init(t_vars *vars);
 void				vars_free(t_vars *vars);
 
 //3_philo_routine.c
-void				*philo_routine(t_vars *vars);
+void				*philo_routine(void *void_vars);
 void				philo_init(t_vars *vars, int *philo_num);
 void				state_message(t_vars *vars, int philo_num, char *message);
 
@@ -127,6 +128,9 @@ long unsigned int	now_millisecond(void);
 void				ft_msleep(long unsigned int wait_millisecond);
 
 //ft_free_dbl_ptr.c
-void				free_dbl_ptr(void **ptr);
+void				free_dbl_ptr(void **ptr, int option);
+
+//debug_fct.c
+void				write_int(int i);
 
 #endif
