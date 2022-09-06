@@ -140,13 +140,6 @@ $(NAME_BONUS):		$(OBJS_BONUS)
 					@gcc $(CFLAGS) libft/*c $(SRCS_BONUS) -o $(NAME_BONUS)
 					@echo "$G$(NAME_BONUS) compiled$W"
 
-#TEST && DEBUGING---------------------------------------------------------------
-CASE1			=	"4" "500" "200" "200" "2"
-CASE2			=	"20" "500" "200" "200" "2"
-CASE3			=	"100" "500" "200" "200" "2"
-CASE4			=	"4" "50" "20" "20" "10"
-
-
 debug:
 ifeq ($(HAVE_LIBFT),y)
 					gcc -g $(CFLAGS) libft/*c $(SRCS) -o $(NAME)
@@ -157,26 +150,13 @@ endif
 #TEST---------------------------------------------------------------------------
 
 simple:
-					leaks --atExit -- ./$(NAME) 4 500 200 200 2 
+					leaks --atExit -- ./$(NAME) 4 500 200 200 10 
 
 big:
-					./$(NAME) $(CASE3)
+					./$(NAME) 200 500 200 200 100
 
 fast:
-					./$(NAME) $(CASE4)
-
-
-lldb1:				debug
-					lldb ./$(NAME) $(CASE1)
-
-lldb2:				debug
-					lldb ./$(NAME) $(CASE2)
-
-lldb3:				debug
-					lldb ./$(NAME) $(CASE3)
-
-lldb4:				debug
-					lldb ./$(NAME) $(CASE4)
+					./$(NAME) 100 50 20 20 100
 
 #PHONY--------------------------------------------------------------------------
 
