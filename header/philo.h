@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:57:45 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/07 12:12:41 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:43:23 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,27 @@
 # include <stdio.h>
 
 //CONST-------------------------------------------------------------------------
-# define MESSAGE_FORK " has taken a fork\n"
-# define MESSAGE_EAT " is eating\n"
-# define MESSAGE_SLEEP " is sleeping\n"
-# define MESSAGE_THINK " is thinking\n"
-# define MESSAGE_DIE " dead\n\n"
+# define MESSAGE_FORK "has taken a fork\n"
+# define MESSAGE_EAT "is eating\n"
+# define MESSAGE_SLEEP "is sleeping\n"
+# define MESSAGE_THINK "is thinking\n"
+# define MESSAGE_DIE "dead\n"
+
+# define KNRM  "\x1B[0m"
+# define KRED  "\x1B[31m"
+# define KGRN  "\x1B[32m"
+# define KYEL  "\x1B[33m"
+# define KBLU  "\x1B[34m"
+# define KMAG  "\x1B[35m"
+# define KCYN  "\x1B[36m"
+# define KWHT  "\x1B[37m"
+
+enum e_state
+{
+	READY_TO_THINK,
+	READY_TO_EAT,
+	READY_TO_SLEEP
+};
 
 //ERROR MANAGEMENT--------------------------------------------------------------
 # define ERR_NBARG "**Error** Wrong number of argument.\n\n"
@@ -89,16 +105,14 @@ typedef struct s_philo
 //0_main.c
 void				create_philo_thread(t_vars *vars, t_philo **philo);
 void				dead_n_eat_checker(t_vars *vars, t_philo **philo);
-void				synchro_start_trigger(t_vars *vars);
-void				synchro_start_relay(t_philo *philo);
 int					dead_checker(t_vars *vars, t_philo **philo);
 int					done_checker(t_vars *vars, t_philo **philo);
 
 //1_parcing_err.c
 int					arg_parcing(int argc, char **argv);
 int					parcing_error_message(int error, int arg);
-void				write_error_arg(int arg);
-void				write_error_type(int error);
+void				print_error_arg(int arg);
+void				print_error_type(int error);
 
 //2_vars_init_free.c
 void				vars_init(t_vars *vars, int argc, char **argv);
@@ -116,30 +130,24 @@ void				philo_sleep(t_philo *philo);
 void				philo_die(t_vars *vars, int philo_num);
 void				philo_think(t_philo *philo);
 
-//utils.c
+//util1_atoi.c
+int					ft_atoi(const char *nptr);
+
+//util2_atol.c
+long int			ft_atol(const char *nptr);
+
+//util3_itoa.c
+char				*ft_itoa(int n);
+
+//util4_msleep.c
+long unsigned int	now_millisecond(void);
+void				ft_msleep(long unsigned int wait_millisecond);
+
+//util5_isintrange.c
 int					ft_is_int_range(char *val, int min, int max);
 int					ft_is_str_digit(char *str);
 int					ft_isdigit(int c);
 size_t				ft_strlen(const char *s);
 int					ft_isspace(char c);
-
-//itoa.c
-char				*ft_itoa(int n);
-
-//ft_atoi.c
-int					ft_atoi(const char *nptr);
-
-//ft_atol.c
-long int			ft_atol(const char *nptr);
-
-//ft_msleep.c
-long unsigned int	now_millisecond(void);
-void				ft_msleep(long unsigned int wait_millisecond);
-
-//ft_free_dbl_ptr.c
-void				free_dbl_ptr(void **ptr, int option);
-
-//debug_fct.c
-void				write_int(int i);
 
 #endif

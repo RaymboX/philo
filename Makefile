@@ -42,12 +42,11 @@ SRCS_FILES	 	= 	0_main.c \
 					2_vars_init_free.c \
 					3_philo_routine.c \
 					4_philo_action.c \
-					ft_atoi.c \
-					ft_atol.c \
-					ft_msleep.c \
-					itoa.c \
-					utils.c \
-					debug_fct.c
+					util1_atoi.c \
+					util2_atol.c \
+					util3_itoa.c \
+					util4_msleep.c \
+					util5_isintrange.c
 					
 #SRCS_FILES_BONUS= 	
 

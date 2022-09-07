@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   util5_isintrange.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:27:30 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/02 11:24:15 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:30:37 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_int_range(char *val, int min, int max)
 	char_int_min = ft_itoa(INT_MIN);
 	len_int_min = ft_strlen(char_int_min);
 	free(char_int_min);
-	if ((int)ft_strlen(val) >= len_int_min)
+	if ((int)ft_strlen(val) > len_int_min)
 		return (2);
 	if (val[0] == '-' && ft_strlen(val) == 1)
 		return (3);

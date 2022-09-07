@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:00:16 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/07 12:05:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:54:03 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 	create_philo_thread(&vars, philo);
 	dead_n_eat_checker(&vars, philo);
 	free_n_destroy(philo, &vars);
-	pthread_mutex_destroy(&vars.mutex_vars);
 	return (0);
 }
 
@@ -38,11 +37,6 @@ void	create_philo_thread(t_vars *vars, t_philo **philo)
 	while (++i < vars->nb_philo)
 		pthread_create(&philo[i]->thread_philo, NULL,
 			&philo_routine, (void *)philo[i]);
-	printf("all thread created\n");
-	vars->time_start = now_millisecond();
-	i = -1;
-	while (++i < vars->nb_philo)
-		philo[i]->last_eat = vars->time_start;
 	pthread_mutex_unlock(&vars->mutex_vars);
 	while (vars->synchro_start != 1)
 		usleep(50);
@@ -62,6 +56,7 @@ void	dead_n_eat_checker(t_vars *vars, t_philo **philo)
 		usleep(50);
 }
 
+//Check all philo to know if someone dead
 int	dead_checker(t_vars *vars, t_philo **philo)
 {
 	int	i;
@@ -84,6 +79,7 @@ int	dead_checker(t_vars *vars, t_philo **philo)
 	return (0);
 }
 
+//Check if all philo finish eating
 int	done_checker(t_vars *vars, t_philo **philo)
 {
 	int	i;

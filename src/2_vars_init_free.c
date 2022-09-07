@@ -6,13 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/07 11:03:00 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:58:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-// record the argv values in vars
+// record the argv values in vars and init mutex_vars
 void	vars_init(t_vars *vars, int argc, char **argv)
 {
 	vars->nb_philo = ft_atoi(argv[1]);
@@ -28,7 +28,7 @@ void	vars_init(t_vars *vars, int argc, char **argv)
 	vars->synchro_start = 0;
 }
 
-// malloc and init vars (thread, mutex, struct)
+// malloc and init philo (thread, mutex, struct)
 t_philo	**philo_init(t_vars *vars)
 {
 	int		i;
@@ -44,7 +44,7 @@ t_philo	**philo_init(t_vars *vars)
 		if (i > 0)
 			philo[i]->fork2 = &philo[i - 1]->fork;
 		philo[i]->done = 0;
-		philo[i]->state = 0;
+		philo[i]->state = READY_TO_THINK;
 		philo[i]->nb_x_eat = 0;
 		philo[i]->vars = vars;
 	}
@@ -54,6 +54,7 @@ t_philo	**philo_init(t_vars *vars)
 	return (philo);
 }
 
+//Wait all thread & Free philo and destroy mutex
 void	free_n_destroy(t_philo **philo, t_vars *vars)
 {
 	int	i;
@@ -66,4 +67,5 @@ void	free_n_destroy(t_philo **philo, t_vars *vars)
 		free(philo[i]);
 	}
 	free(philo);
+	pthread_mutex_destroy(&vars->mutex_vars);
 }
