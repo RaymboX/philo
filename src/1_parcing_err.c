@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:44 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/01 15:26:47 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:45:35 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	arg_parcing(int argc, char **argv)
 	arg_num = 2;
 	while (arg_num < argc && fct_ret == 0)
 	{
-		fct_ret = ft_is_int_range(argv[arg_num], 0, INT_MAX);
+		fct_ret = ft_is_int_range(argv[arg_num], 1, INT_MAX);
 		arg_num++;
 	}
 	if (fct_ret != 0)
@@ -46,8 +46,8 @@ int	parcing_error_message(int error, int arg)
 	write(2, "./philo  <nb_philo>  <time_to_die>  <time_to_eat>"
 		"  <time_to_sleep>  <optional:how_many_time_to_eat>\n\n", 101);
 	write(2, LIMITS, ft_strlen(LIMITS));
-	write(2, "./philo  <1_to_200>  <0_to_INTMAX>  <0_to_INTMAX>  <0_to_INTMAX>"
-		"  <Nothing_or_0_to_INTMAX>\n\n", 93);
+	write(2, "./philo  <1_to_200>  <1_to_INTMAX>  <1_to_INTMAX>  <1_to_INTMAX>"
+		"  <Nothing_or_1_to_INTMAX>\n\n", 93);
 	return (1);
 }
 

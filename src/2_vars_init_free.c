@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/06 15:12:05 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:03:00 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	vars_init(t_vars *vars, int argc, char **argv)
 		vars->nb_x_eat = -1;
 	vars->philo_dead = 0;
 	pthread_mutex_init(&vars->mutex_vars, NULL);
+	vars->synchro_start = 0;
 }
 
 // malloc and init vars (thread, mutex, struct)
@@ -65,5 +66,4 @@ void	free_n_destroy(t_philo **philo, t_vars *vars)
 		free(philo[i]);
 	}
 	free(philo);
-	pthread_mutex_destroy(&vars->mutex_vars);
 }

@@ -42,7 +42,6 @@ SRCS_FILES	 	= 	0_main.c \
 					2_vars_init_free.c \
 					3_philo_routine.c \
 					4_philo_action.c \
-					free_dbl_ptr.c \
 					ft_atoi.c \
 					ft_atol.c \
 					ft_msleep.c \
@@ -145,7 +144,12 @@ CASE1			=	"4" "500" "200" "200" "2"
 CASE2			=	"20" "500" "200" "200" "2"
 CASE3			=	"100" "500" "200" "200" "2"
 CASE4			=	"4" "50" "20" "20" "10"
-
+CASE5			=	"50" "500" "200" "200" "2"
+CASE6			=	"150" "500" "200" "200" "2"
+CASE7			=	"200" "500" "200" "200" "2"
+CASE8			=	"200" "211" "100" "100" "10"
+CASE9			=	"1" "211" "100" "100" "10"
+CASE10			=	"20" "211" "100" "100"
 
 debug:
 ifeq ($(HAVE_LIBFT),y)
@@ -159,12 +163,32 @@ endif
 simple:
 					leaks --atExit -- ./$(NAME) 4 500 200 200 2 
 
-big:
+normal100:
 					./$(NAME) $(CASE3)
 
 fast:
 					./$(NAME) $(CASE4)
 
+normal20:
+					./$(NAME) $(CASE2)
+
+normal50:
+					./$(NAME) $(CASE5)
+
+normal150:
+					./$(NAME) $(CASE6)
+
+normal200:
+					./$(NAME) $(CASE7)
+
+limit200:
+					./$(NAME) $(CASE8)
+
+one:
+					./$(NAME) $(CASE9)
+
+infini20:
+					./$(NAME) $(CASE10)
 
 lldb1:				debug
 					lldb ./$(NAME) $(CASE1)
@@ -177,6 +201,9 @@ lldb3:				debug
 
 lldb4:				debug
 					lldb ./$(NAME) $(CASE4)
+
+lldb9:				debug
+					lldb ./$(NAME) $(CASE9)
 
 #PHONY--------------------------------------------------------------------------
 

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:57:45 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/06 14:59:54 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 12:12:41 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <limits.h>
-# include <stddef.h>
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -27,7 +26,7 @@
 # define MESSAGE_EAT " is eating\n"
 # define MESSAGE_SLEEP " is sleeping\n"
 # define MESSAGE_THINK " is thinking\n"
-# define MESSAGE_DIE " dead\n"
+# define MESSAGE_DIE " dead\n\n"
 
 //ERROR MANAGEMENT--------------------------------------------------------------
 # define ERR_NBARG "**Error** Wrong number of argument.\n\n"
@@ -70,6 +69,7 @@ typedef struct s_vars
 	int					nb_x_eat;
 	long int unsigned	time_start;
 	int					philo_dead;
+	int					synchro_start;
 }				t_vars;
 
 typedef struct s_philo
@@ -141,11 +141,5 @@ void				free_dbl_ptr(void **ptr, int option);
 
 //debug_fct.c
 void				write_int(int i);
-
-//temp
-void				free_dbl_t_philo(t_philo **philo);
-void				free_dbl_thread(pthread_t **thread);
-void				free_dbl_mutex(pthread_mutex_t **mutex);
-
 
 #endif

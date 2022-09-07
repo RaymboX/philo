@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:00:16 by mraymond          #+#    #+#             */
-/*   Updated: 2022/09/06 15:21:55 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/09/07 12:05:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 	create_philo_thread(&vars, philo);
 	dead_n_eat_checker(&vars, philo);
 	free_n_destroy(philo, &vars);
+	pthread_mutex_destroy(&vars.mutex_vars);
 	return (0);
 }
 
@@ -39,13 +40,24 @@ void	create_philo_thread(t_vars *vars, t_philo **philo)
 			&philo_routine, (void *)philo[i]);
 	printf("all thread created\n");
 	vars->time_start = now_millisecond();
+	i = -1;
+	while (++i < vars->nb_philo)
+		philo[i]->last_eat = vars->time_start;
+	pthread_mutex_unlock(&vars->mutex_vars);
+	while (vars->synchro_start != 1)
+		usleep(50);
+	pthread_mutex_lock(&vars->mutex_vars);
+	vars->time_start = now_millisecond();
+	i = -1;
+	while (++i < vars->nb_philo)
+		philo[i]->last_eat = vars->time_start;
+	vars->synchro_start = 2;
 	pthread_mutex_unlock(&vars->mutex_vars);
 }
 
 //Check if one philo dead or if everybody done eating
 void	dead_n_eat_checker(t_vars *vars, t_philo **philo)
 {
-	usleep(1000);
 	while (dead_checker(vars, philo) == 0 && done_checker(vars, philo) == 0)
 		usleep(50);
 }
@@ -57,15 +69,15 @@ int	dead_checker(t_vars *vars, t_philo **philo)
 	i = 0;
 	while (i != vars->nb_philo)
 	{
-		if ((int)(now_millisecond() - philo[i]->last_eat)
-			> vars->die_duration
-			&& philo[i]->done != 1)
+		if (philo[i]->done == 0 && (int)(now_millisecond() - philo[i]->last_eat)
+			> vars->die_duration)
 		{
-			state_message(vars, i, MESSAGE_DIE);
 			pthread_mutex_lock(&vars->mutex_vars);
 			vars->philo_dead = 1;
+			printf("%d %d %s", (int)(now_millisecond() - vars->time_start),
+				i + 1, MESSAGE_DIE);
 			pthread_mutex_unlock(&vars->mutex_vars);
-			return (1);
+			return (i + 1);
 		}
 		i++;
 	}
